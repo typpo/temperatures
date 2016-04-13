@@ -45,7 +45,7 @@ with gzip.open('./ncdc-merged-sfc-mntp.dat.gz', 'rb') as f:
             lat_lower_bound -= 5
             lat_upper_bound -= 5
 
-with open('output.json', 'w') as f:
+with gzip.open('output.json.gz', 'wb') as f:
     f.write(json.dumps(data, indent=2))
 
 print 'Done'

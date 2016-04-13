@@ -1,0 +1,254 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Ancient Earth globe</title>
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@iwebst">
+  <meta name="twitter:title" content="Ancient Earth - What the globe used to look like">
+  <meta name="twitter:description" content="Earth looked very different 600 million years ago">
+  <meta name="twitter:creator" content="@iwebst">
+  <meta name="twitter:image" content="http://i.imgur.com/Ya57O3tl.png">
+
+  <meta property="og:title" content="Ancient Earth - What the globe used to look like" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="http://dinosaurpictures.org/ancient-earth" />
+  <meta property="og:image" content="http://i.imgur.com/Ya57O3tl.png" />
+  <meta property="og:description" content="Earth looked very different 600 million years ago" />
+	<style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: #000;
+      font-family: 'proxima-nova',Helvetica,sans-serif;
+    }
+		.tm  { position: absolute; top: 10px; right: 10px; }
+		.webgl-error { font: 15px/30px monospace; text-align: center; color: #fff; margin: 50px; }
+		.webgl-error a { color: #fff; }
+    #webgl {
+    }
+    .top {
+      z-index: 999990;
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 40px;
+      background-color: black;
+      border-bottom: 1px solid #404040;
+      z-index: 999999;
+      color: white;
+      line-height: 2.5;
+      text-align: center;
+    }
+
+    a {
+      color: white;
+    }
+
+    .top-sub {
+      position: absolute;
+      top: 50px;
+      left: 0;
+      color: #aaa;
+      text-align: center;
+      width: 100%;
+    }
+
+    .title {
+      font-family: Helvetica, sans-serif;
+      font-size: 20px;
+      font-weight: bold;
+      position:absolute;
+      bottom:20px;
+      left: 20px ;
+      color: white;
+    }
+
+    #years-ago {
+      font-weight: bold;
+    }
+
+    #explanation {
+      font-size: 14px;
+      position:absolute;
+      bottom: 80px;
+      left: 20px ;
+      width: 300px;
+      line-height: 1.5;
+      color: #eee;
+    }
+
+    #instructions {
+      font-size: 12px;
+      position: absolute;
+      bottom: 20px;
+      right: 30px;
+      color: #eee;
+    }
+
+    #controls {
+      font-size: 12px;
+      position: absolute;
+      top: 50px;
+      right: 30px;
+      color: #eee;
+      text-align: right;
+    }
+
+    #controls .button {
+      background-color: #202020;
+      cursor: pointer;
+      padding: 5px;
+      border-radius: 5px;
+      line-height: 2.5;
+    }
+
+    #controls span:hover {
+      background-color: #303030;
+    }
+
+    .jump-to-container {
+      margin-bottom: 3px;
+    }
+
+    #jump-to {
+      color: #fff;
+    }
+
+    .social-container {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 12px;
+    }
+
+    ul.share-buttons {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    ul.share-buttons li {
+      display: inline;
+    }
+
+    ul.share-buttons img {
+      width: 20px;
+      height: auto;
+    }
+
+    .links {
+      position: absolute;
+      top: 5px;
+      left: 20px;
+      font-size: 12px;
+    }
+
+    #loading {
+      font-size: 30px;
+      font-weight: bold;
+      text-align: center;
+      position: absolute;
+      top: 45%;
+      width: 100%;
+      color: #fff;
+    }
+
+    @media screen and (max-width: 1024px) {
+      .top, .top-sub, #explanation {
+        font-size: 12px;
+      }
+
+      #instructions, .social-container, .links {
+        display: none;
+      }
+
+      .main-heading {
+        line-height: 3.5;
+      }
+    }
+    </style>
+</head>
+<body>
+  <div class="top">
+    <div class="links">
+      foo bar
+    </div>
+    <strong class="main-heading">
+      Temperature anomalies since 1800
+    </strong>
+    <div class="social-container">
+      <ul class="share-buttons">
+        <li><a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fdinosaurpictures.org%2F&t=" title="Share on Facebook" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(document.URL) + '&t=' + encodeURIComponent(document.URL)); return false;"><img src="images/flat_web_icon_set/color/Facebook.png"></a></li>
+        <li><a href="https://twitter.com/intent/tweet?source=http%3A%2F%2Fdinosaurpictures.org%2F&text=:%20http%3A%2F%2Fdinosaurpictures.org%2F&via=iwebst" target="_blank" title="Tweet" onclick="window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(document.title) + ':%20'  + encodeURIComponent(document.URL)); return false;"><img src="images/flat_web_icon_set/color/Twitter.png"></a></li>
+        <li><a href="mailto:?subject=&body=:%20http%3A%2F%2Fdinosaurpictures.org%2F" target="_blank" title="Email" onclick="window.open('mailto:?subject=' + encodeURIComponent(document.title) + '&body=' +  encodeURIComponent(document.URL)); return false;"><img src="images/flat_web_icon_set/color/Email.png"></a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="controls">
+    <div class="jump-to-container">
+      <span>Jump to... </span>
+      <select id="jump-to" class="button">
+        <option value="600">first multicellular life</option>
+        <option value="540">first shells</option>
+        <option value="470">first coral reefs</option>
+        <option value="470">first vertebrates</option>
+        <option value="430">first land plants</option>
+        <option value="400">first land animals</option>
+        <option value="400">first insects</option>
+        <option value="300">first reptiles</option>
+        <option value="220">first dinosaurs</option>
+        <option value="120">first flowers</option>
+        <option value="35">first primates</option>
+        <option value="35">first grass</option>
+        <option value="20">first hominids</option>
+
+        <option value="600">Pannotia supercontinent</option>
+        <option value="280">Pangea supercontinent</option>
+        <option value="240">Triassic</option>
+        <option value="170">Jurassic</option>
+        <option value="105">Cretaceous</option>
+        <option value="65">dinosaur extinction</option>
+      </select>
+    </div>
+    <span id="remove-clouds" class="button">Remove clouds</span><br>
+    <span id="stop-rotation" class="button">Stop rotation</span>
+  </div>
+  <div id="explanation"></div>
+  <div id="instructions">
+    Use the ← and → keys to step through time.
+  </div>
+  <div class="title">Earth, <span id="how-long-ago">600 million</span> years ago</div>
+
+  <div id="loading">Loading...</div>
+
+	<div id="webgl"></div>
+
+	<script src="js/three.min.js"></script>
+	<script src="js/heatmap.js"></script>
+	<script src="js/Detector.js"></script>
+	<script src="js/OrbitControls.js"></script>
+	<script src="js/THREEx.WindowResize.js"></script>
+	<script src="js/countdown.min.js"></script>
+	<script src="js/explain.js"></script>
+	<script src="js/main.js"></script>
+    <!-- start Mixpanel --><script type="text/javascript">(function(f,b){if(!b.__SV){var a,e,i,g;window.mixpanel=b;b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=f.createElement("script");a.type="text/javascript";a.async=!0;a.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";e=f.getElementsByTagName("script")[0];e.parentNode.insertBefore(a,e)}})(document,window.mixpanel||[]);
+mixpanel.init("c46b3dfff827de823f35a442a22a1ab8");</script><!-- end Mixpanel -->
+        <script>if(window.location.href.indexOf('localhost') < 0) mixpanel.track('ancient-earth');</script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      if (window.location.href.indexOf('localhost') < 0) {
+        ga('create', 'UA-62588220-1', 'auto');
+        ga('send', 'pageview');
+      }
+    </script>
+</body>
+</html>
