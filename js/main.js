@@ -50,6 +50,12 @@
   clouds.rotation.y = rotation;
   scene.add(clouds)
 
+  var heatMap = getHeatmap();
+  setTimeout(function() {
+    var heatSphere = createHeatSphere(radius, segments, heatMap);
+    scene.add(heatSphere);
+  }, 2000);
+
   var stars = createStars(90, 64);
   scene.add(stars);
 
@@ -113,6 +119,20 @@
     );
   }
 
+  function createHeatSphere(radius, segments, heatMap) {
+    var map = new THREE.Texture(heatMap);
+    map.needsUpdate = true;
+
+    return new THREE.Mesh(
+      new THREE.SphereGeometry(radius + 0.005, segments, segments),
+      new THREE.MeshPhongMaterial({
+        map:         map,
+        transparent: true,
+        opacity: 1.0,
+      })
+    );
+  }
+
   function createStars(radius, segments) {
     return new THREE.Mesh(
       new THREE.SphereGeometry(radius, segments, segments),
@@ -134,5 +154,38 @@
 				specular:    new THREE.Color('grey')
 			})
 		);
+  }
+
+  function getHeatmap() {
+    var hm = h337.create({
+      container: document.getElementById('heatmap')
+    });
+
+    // Now generate some random data
+    var points = [];
+    var max = 0;
+    var width = 256;
+    var height = 256;
+    var len = 200;
+
+		while (len--) {
+			var val = Math.floor(Math.random()*100);
+			max = Math.max(max, val);
+			var point = {
+				x: Math.floor(Math.random()*width),
+				y: Math.floor(Math.random()*height),
+				value: val
+			};
+			points.push(point);
+		}
+
+    var data = {
+      max: max,
+      data: points
+    };
+
+    hm.setData(data);
+
+    return document.querySelector('#heatmap canvas');
   }
 }());
