@@ -124,11 +124,11 @@
     map.needsUpdate = true;
 
     return new THREE.Mesh(
-      new THREE.SphereGeometry(radius + 0.005, segments, segments),
+      new THREE.SphereGeometry(radius + 0.006, segments, segments),
       new THREE.MeshPhongMaterial({
         map:         map,
         transparent: true,
-        opacity: 1.0,
+        opacity: 0.5,
       })
     );
   }
