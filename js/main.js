@@ -52,7 +52,7 @@
 
   var clouds = createClouds(radius, segments);
   clouds.rotation.y = rotation;
-  scene.add(clouds)
+  // scene.add(clouds)
 
   var renderedHeatSphere = null;
   animateHeatSphere();
@@ -207,7 +207,6 @@
         arridx++;
       }
     }
-    console.log(month, year, max);
 
     data = {
       max: 1000,
@@ -259,7 +258,6 @@
       renderedHeatSphere = createHeatSphere(radius, segments, heatMap);
       scene.add(renderedHeatSphere);
     }
-    console.log(month, year);
   }
 
   function getRandomHeatmapData() {
