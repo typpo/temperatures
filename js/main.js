@@ -1,4 +1,8 @@
 (function () {
+  // Height and width on canvas.
+  var LAT_HEIGHT_PX = 36;
+  var LNG_WIDTH_PX = 72;
+
   var webglEl = document.getElementById('webgl');
 
   if (!Detector.webgl) {
@@ -128,7 +132,7 @@
       new THREE.MeshPhongMaterial({
         map:         map,
         transparent: true,
-        opacity: 0.5,
+        opacity: 0.7,
       })
     );
   }
@@ -163,11 +167,51 @@
       radius: 1,
     });
 
-    // Now generate some random data
     var points = [];
     var max = 0;
-    var width = 72;
-    var height = 36;
+
+    monthData = getDataForMonth(2, 2016);
+    assert(monthData[0] == 2, 'Data must be aligned properly');
+    assert(monthData[1] == 2016, 'Data must be aligned properly');
+
+    var arridx = 2;
+    for (var latX = LAT_HEIGHT_PX - 1; latX >= 0; latX--) {
+      for (var lngY = 0; lngY < LNG_WIDTH_PX; lngY++) {
+        var val = parseFloat(monthData[arridx])/100.0;
+        max = Math.max(val, max);
+        points.push({
+          x: latX,
+          y: lngY,
+          value: val
+        });
+        arridx++;
+      }
+    }
+
+    data = {
+      max: max,
+      data: points
+    };
+
+    console.log(data);
+    hm.setData(data);
+
+    return document.querySelector('#heatmap canvas');
+  }
+
+  function getDataForMonth(month, year) {
+    var monthSize = LAT_HEIGHT_PX * LNG_WIDTH_PX + 2;
+    var yearOffset = year - 1880;
+    var monthOffset = month - 1;
+    var totalOffset = (yearOffset * 12 + monthOffset) * monthSize;
+    return window.DATA.slice(totalOffset, totalOffset + monthSize);
+  }
+
+  function getRandomHeatmapData() {
+    var points = [];
+    var max = 0;
+    var width = LNG_WIDTH_PX;
+    var height = LAT_HEIGHT_PX;
 
     for (var i=0; i < width; i++) {
       for (var j=0; j < height; j++) {
@@ -182,13 +226,18 @@
       }
     }
 
-    var data = {
+    return {
       max: max,
       data: points
     };
-
-    hm.setData(data);
-
-    return document.querySelector('#heatmap canvas');
   }
+	function assert(condition, message) {
+    if (!condition) {
+      message = message || "Assertion failed";
+      if (typeof Error !== "undefined") {
+        throw new Error(message);
+      }
+      throw message; // Fallback
+    }
+	}
 }());
