@@ -176,15 +176,15 @@
     assert(monthData[1] == 2016, 'Data must be aligned properly');
 
     var arridx = 2;
-    for (var latX = LAT_HEIGHT_PX - 1; latX >= 0; latX--) {
-      for (var lngY = 0; lngY < LNG_WIDTH_PX; lngY++) {
+    for (var latBucket = 0; latBucket < LAT_HEIGHT_PX; latBucket++) {
+      for (var lngBucket = 0; lngBucket < LNG_WIDTH_PX; lngBucket++) {
         var val = monthData[arridx];
         max = Math.max(val, max);
         points.push({
           // NOTE that x, y are reversed here, because pixel coord systems are
           // different from latlng.
-          y: latX,
-          x: lngY,
+          y: latBucket,
+          x: lngBucket,
           value: val
         });
         arridx++;
