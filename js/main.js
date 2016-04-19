@@ -54,9 +54,8 @@
   clouds.rotation.y = rotation;
   scene.add(clouds)
 
-  var heatMap = getHeatmap();
-  var heatSphere = createHeatSphere(radius, segments, heatMap);
-  scene.add(heatSphere);
+  var renderedHeatSphere = null;
+  animateHeatSphere();
 
   var stars = createStars(90, 64);
   scene.add(stars);
@@ -81,12 +80,12 @@
     if (!noRotation) {
       if (simulationClicked) {
         sphere.rotation.y += 0.0005;
-        clouds.rotation.y += 0.0005;
-        heatSphere.rotation.y += 0.0005;
       } else {
         sphere.rotation.y += 0.001;
-        clouds.rotation.y += 0.001;
-        heatSphere.rotation.y += 0.001;
+      }
+      clouds.rotation.y = sphere.rotation.y;
+      if (renderedHeatSphere) {
+        renderedHeatSphere.rotation.y = sphere.rotation.y;
       }
     }
 
@@ -160,25 +159,29 @@
 		);
   }
 
-  function getHeatmap() {
-    var hm = h337.create({
-      container: document.getElementById('heatmap'),
-      blur: 0,
-      radius: 1,
-      opacity: 1.0,
-    });
+  var hm = h337.create({
+    container: document.getElementById('heatmap'),
+    blur: 0,
+    radius: 1,
+    opacity: 1.0,
+  });
 
+  function getHeatmapForMonth(month, year) {
     var points = [];
     var max = 0;
 
-    monthData = getDataForMonth(2, 2016);
-    assert(monthData[0] == 2, 'Data must be aligned properly');
-    assert(monthData[1] == 2016, 'Data must be aligned properly');
+    monthData = getDataForMonth(month, year);
+    assert(monthData[0] == month, 'Data must be aligned properly');
+    assert(monthData[1] == year, 'Data must be aligned properly');
 
     var arridx = 2;
     for (var latBucket = 0; latBucket < LAT_HEIGHT_PX; latBucket++) {
       for (var lngBucket = 0; lngBucket < LNG_WIDTH_PX; lngBucket++) {
         var val = monthData[arridx];
+        if (!val) {
+          arridx++;
+          continue;
+        }
         max = Math.max(val, max);
         points.push({
           // NOTE that x, y are reversed here, because pixel coord systems are
@@ -195,8 +198,6 @@
       max: max,
       data: points
     };
-
-    console.log(data);
     hm.setData(data);
 
     return document.querySelector('#heatmap canvas');
@@ -208,6 +209,40 @@
     var monthOffset = month - 1;
     var totalOffset = (yearOffset * 12 + monthOffset) * monthSize;
     return window.DATA.slice(totalOffset, totalOffset + monthSize);
+  }
+
+  function animateHeatSphere() {
+    var month = 1;
+    var year = 1880;
+
+    var t = setInterval(function() {
+      renderHeatSphereForMonth(month, year);
+      document.getElementById('bottom-title').innerHTML = month + '-' + year;
+      month++;
+
+      if (year > 2015) {
+        clearInterval(t);
+      }
+      if (month > 12) {
+        month = 1;
+        year++;
+      }
+    }, 100);
+  }
+
+  function renderHeatSphereForMonth(month, year) {
+    var heatMap = getHeatmapForMonth(month, year);
+    if (renderedHeatSphere) {
+      // TODO(ian): dispose of old texture?
+      renderedHeatSphere.material.map = new THREE.Texture(heatMap);
+      console.log(renderedHeatSphere.material.map);
+      renderedHeatSphere.material.map.needsUpdate = true;
+      renderedHeatSphere.material.needsUpdate = true;
+    } else {
+      renderedHeatSphere = createHeatSphere(radius, segments, heatMap);
+      scene.add(renderedHeatSphere);
+    }
+    console.log(month, year);
   }
 
   function getRandomHeatmapData() {
@@ -234,6 +269,7 @@
       data: points
     };
   }
+
 	function assert(condition, message) {
     if (!condition) {
       message = message || "Assertion failed";
