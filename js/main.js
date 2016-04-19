@@ -238,7 +238,7 @@
       animationMonth++;
 
       if (animationYear > 2015) {
-        clearInterval(t);
+        clearInterval(animationInterval);
       }
       if (animationMonth > 12) {
         animationMonth = 1;
