@@ -172,9 +172,6 @@
     for (var i=0; i < width; i++) {
       for (var j=0; j < height; j++) {
         var val = Math.floor(Math.random()*100);
-        if (i < width / 2 && j < height / 2) {
-          val = 0;
-        }
         max = Math.max(max, val);
         var point = {
           x: i,
