@@ -163,8 +163,8 @@
     container: document.getElementById('heatmap'),
     blur: 0,
     radius: 1,
-    maxOpacity: 0.9,
-    minOpacity: .1,
+    maxOpacity: 1,
+    minOpacity: 0.5,
     gradient: {
       '0.': 'blue',
       '.5': 'yellow',
@@ -204,7 +204,7 @@
     console.log(month, year, max);
 
     data = {
-      max: 2000,
+      max: 1000,
       data: points
     };
 
@@ -223,11 +223,11 @@
 
   function animateHeatSphere() {
     var month = 1;
-    var year = 2000;
+    var year = 1880;
 
     var t = setInterval(function() {
       renderHeatSphereForMonth(month, year);
-      document.getElementById('bottom-title').innerHTML = month + '-' + year;
+      document.getElementById('bottom-title').innerHTML = month + '/' + year;
       month++;
 
       if (year > 2015) {
