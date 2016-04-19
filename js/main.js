@@ -158,7 +158,9 @@
 
   function getHeatmap() {
     var hm = h337.create({
-      container: document.getElementById('heatmap')
+      container: document.getElementById('heatmap'),
+      blur: 0,
+      radius: 1,
     });
 
     // Now generate some random data
@@ -169,7 +171,7 @@
 
     for (var i=0; i < width; i++) {
       for (var j=0; j < height; j++) {
-        var val = Math.floor(Math.random()*1000);
+        var val = Math.floor(Math.random()*100);
         if (i < width / 2 && j < height / 2) {
           val = 0;
         }
@@ -188,7 +190,6 @@
       data: points
     };
 
-    console.log(points);
     hm.setData(data);
 
     return document.querySelector('#heatmap canvas');
