@@ -5,6 +5,7 @@ import json
 import sys
 
 data = []
+compact_data = []
 
 with gzip.open('./ncdc-merged-sfc-mntp.dat.gz', 'rb') as f:
     month = -1
@@ -33,19 +34,24 @@ with gzip.open('./ncdc-merged-sfc-mntp.dat.gz', 'rb') as f:
                 assert (lng_lower_bound >= -180 and lng_upper_bound >= -175)
                 if value == '-9999':
                     continue
+                val = int(value)
                 grid_obj = {
                     'lat_lbound': lat_lower_bound,
                     'lat_ubound': lat_upper_bound,
                     'lng_lbound': lng_lower_bound,
                     'lng_ubound': lng_upper_bound,
-                    'value': int(value)/100.0,
+                    'value': val/100.0,
                 }
                 data[-1]['grid'].append(grid_obj)
+                compact_data.append(val)
 
             lat_lower_bound -= 5
             lat_upper_bound -= 5
 
-with gzip.open('output.json.gz', 'wb') as f:
-    f.write(json.dumps(data, indent=2))
+#with gzip.open('output.json.gz', 'wb') as f:
+#    f.write(json.dumps(data, indent=2))
+
+with gzip.open('output_compact.json.gz', 'wb') as f:
+    f.write(json.dumps(compact_data))
 
 print 'Done'
