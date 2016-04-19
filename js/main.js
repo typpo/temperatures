@@ -164,26 +164,31 @@
     // Now generate some random data
     var points = [];
     var max = 0;
-    var width = 256;
-    var height = 256;
-    var len = 200;
+    var width = 72;
+    var height = 36;
 
-		while (len--) {
-			var val = Math.floor(Math.random()*100);
-			max = Math.max(max, val);
-			var point = {
-				x: Math.floor(Math.random()*width),
-				y: Math.floor(Math.random()*height),
-				value: val
-			};
-			points.push(point);
-		}
+    for (var i=0; i < width; i++) {
+      for (var j=0; j < height; j++) {
+        var val = Math.floor(Math.random()*1000);
+        if (i < width / 2 && j < height / 2) {
+          val = 0;
+        }
+        max = Math.max(max, val);
+        var point = {
+          x: i,
+          y: j,
+          value: val
+        };
+        points.push(point);
+      }
+    }
 
     var data = {
       max: max,
       data: points
     };
 
+    console.log(points);
     hm.setData(data);
 
     return document.querySelector('#heatmap canvas');
