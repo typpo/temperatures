@@ -260,31 +260,6 @@
     }
   }
 
-  function getRandomHeatmapData() {
-    var points = [];
-    var max = 0;
-    var width = LNG_WIDTH_PX;
-    var height = LAT_HEIGHT_PX;
-
-    for (var i=0; i < width; i++) {
-      for (var j=0; j < height; j++) {
-        var val = Math.floor(Math.random()*100);
-        max = Math.max(max, val);
-        var point = {
-          x: i,
-          y: j,
-          value: val
-        };
-        points.push(point);
-      }
-    }
-
-    return {
-      max: max,
-      data: points
-    };
-  }
-
 	function assert(condition, message) {
     if (!condition) {
       message = message || "Assertion failed";
