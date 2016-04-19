@@ -55,10 +55,8 @@
   scene.add(clouds)
 
   var heatMap = getHeatmap();
-  setTimeout(function() {
-    var heatSphere = createHeatSphere(radius, segments, heatMap);
-    scene.add(heatSphere);
-  }, 2000);
+  var heatSphere = createHeatSphere(radius, segments, heatMap);
+  scene.add(heatSphere);
 
   var stars = createStars(90, 64);
   scene.add(stars);
@@ -84,9 +82,11 @@
       if (simulationClicked) {
         sphere.rotation.y += 0.0005;
         clouds.rotation.y += 0.0005;
+        heatSphere.rotation.y += 0.0005;
       } else {
         sphere.rotation.y += 0.001;
         clouds.rotation.y += 0.001;
+        heatSphere.rotation.y += 0.001;
       }
     }
 
@@ -132,7 +132,7 @@
       new THREE.MeshPhongMaterial({
         map:         map,
         transparent: true,
-        opacity: 0.7,
+        opacity: 0.5,
       })
     );
   }
@@ -165,6 +165,7 @@
       container: document.getElementById('heatmap'),
       blur: 0,
       radius: 1,
+      opacity: 1.0,
     });
 
     var points = [];
@@ -177,11 +178,13 @@
     var arridx = 2;
     for (var latX = LAT_HEIGHT_PX - 1; latX >= 0; latX--) {
       for (var lngY = 0; lngY < LNG_WIDTH_PX; lngY++) {
-        var val = parseFloat(monthData[arridx])/100.0;
+        var val = monthData[arridx];
         max = Math.max(val, max);
         points.push({
-          x: latX,
-          y: lngY,
+          // NOTE that x, y are reversed here, because pixel coord systems are
+          // different from latlng.
+          y: latX,
+          x: lngY,
           value: val
         });
         arridx++;
