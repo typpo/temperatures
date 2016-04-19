@@ -78,10 +78,8 @@
     controls.update();
 
     if (!noRotation) {
-      if (simulationClicked) {
+      if (!simulationClicked) {
         sphere.rotation.y += 0.0005;
-      } else {
-        sphere.rotation.y += 0.001;
       }
       clouds.rotation.y = sphere.rotation.y;
       if (renderedHeatSphere) {
