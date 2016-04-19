@@ -17,6 +17,14 @@ with gzip.open('./ncdc-merged-sfc-mntp.dat.gz', 'rb') as f:
     for line in f.readlines():
         numbers = [n for n in line.split() if n.strip() != '']
         if len(numbers) == 2:
+
+            if len(values) > 0:
+                print '%d/%d:' % (month, year)
+                print 'max:', max(values)
+                print 'min:', min(values)
+                print 'avg:', sum(values)/float(len(values))
+                values = []
+
             # New month/year
             month = int(numbers[0])
             year = int(numbers[1])
@@ -62,8 +70,5 @@ with gzip.open('./ncdc-merged-sfc-mntp.dat.gz', 'rb') as f:
 with open('output_compact.js', 'w') as f:
     f.write('window.DATA=');
     f.write(json.dumps(compact_data))
-
-print 'max:', max(values)
-print 'min:', min(values)
 
 print 'Done'

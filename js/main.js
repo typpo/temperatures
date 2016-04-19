@@ -185,24 +185,26 @@
     for (var latBucket = 0; latBucket < LAT_HEIGHT_PX; latBucket++) {
       for (var lngBucket = 0; lngBucket < LNG_WIDTH_PX; lngBucket++) {
         var val = monthData[arridx];
-        if (!val || val == -9999) {
+        if (val == -9999) {
           arridx++;
           continue;
         }
+        val = Math.abs(val);
 
         max = Math.max(val, max);
         min = Math.min(val, min);
         points.push({
           y: latBucket,
           x: lngBucket,
-          value: Math.abs(val)
+          value: val,
         });
         arridx++;
       }
     }
+    console.log(month, year, max);
 
     data = {
-      max: max,
+      max: 2000,
       data: points
     };
 
@@ -221,7 +223,7 @@
 
   function animateHeatSphere() {
     var month = 1;
-    var year = 1880;
+    var year = 2000;
 
     var t = setInterval(function() {
       renderHeatSphereForMonth(month, year);
@@ -243,7 +245,6 @@
     if (renderedHeatSphere) {
       // TODO(ian): dispose of old texture?
       renderedHeatSphere.material.map = new THREE.Texture(heatMap);
-      console.log(renderedHeatSphere.material.map);
       renderedHeatSphere.material.map.needsUpdate = true;
       renderedHeatSphere.material.needsUpdate = true;
     } else {
