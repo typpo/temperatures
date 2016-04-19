@@ -6,6 +6,7 @@ import sys
 
 data = []
 compact_data = []
+values = []
 
 with gzip.open('./ncdc-merged-sfc-mntp.dat.gz', 'rb') as f:
     month = -1
@@ -35,7 +36,7 @@ with gzip.open('./ncdc-merged-sfc-mntp.dat.gz', 'rb') as f:
             for value in numbers:
                 assert (lng_lower_bound >= -180 and lng_upper_bound >= -175)
                 if value == '-9999':
-                    compact_data.append(0)
+                    compact_data.append(-9999)
                 else:
                     val = int(value)
                     grid_obj = {
@@ -47,6 +48,7 @@ with gzip.open('./ncdc-merged-sfc-mntp.dat.gz', 'rb') as f:
                     }
                     data[-1]['grid'].append(grid_obj)
                     compact_data.append(val)
+                    values.append(val)
 
                 lng_lower_bound -= 5
                 lng_upper_bound -= 5
@@ -60,5 +62,8 @@ with gzip.open('./ncdc-merged-sfc-mntp.dat.gz', 'rb') as f:
 with open('output_compact.js', 'w') as f:
     f.write('window.DATA=');
     f.write(json.dumps(compact_data))
+
+print 'max:', max(values)
+print 'min:', min(values)
 
 print 'Done'

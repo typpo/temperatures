@@ -163,12 +163,19 @@
     container: document.getElementById('heatmap'),
     blur: 0,
     radius: 1,
-    opacity: 1.0,
+    maxOpacity: 0.9,
+    minOpacity: .1,
+    gradient: {
+      '0.': 'blue',
+      '.5': 'yellow',
+      '1.': 'red',
+    }
   });
 
   function getHeatmapForMonth(month, year) {
     var points = [];
-    var max = 0;
+    var max = Number.MIN_VALUE;
+    var min = Number.MAX_VALUE;
 
     monthData = getDataForMonth(month, year);
     assert(monthData[0] == month, 'Data must be aligned properly');
@@ -178,17 +185,17 @@
     for (var latBucket = 0; latBucket < LAT_HEIGHT_PX; latBucket++) {
       for (var lngBucket = 0; lngBucket < LNG_WIDTH_PX; lngBucket++) {
         var val = monthData[arridx];
-        if (!val) {
+        if (!val || val == -9999) {
           arridx++;
           continue;
         }
+
         max = Math.max(val, max);
+        min = Math.min(val, min);
         points.push({
-          // NOTE that x, y are reversed here, because pixel coord systems are
-          // different from latlng.
           y: latBucket,
           x: lngBucket,
-          value: val
+          value: Math.abs(val)
         });
         arridx++;
       }
@@ -198,6 +205,7 @@
       max: max,
       data: points
     };
+
     hm.setData(data);
 
     return document.querySelector('#heatmap canvas');
