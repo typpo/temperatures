@@ -102,6 +102,14 @@
       noRotation = true;
       stopRotationElt.style.display = 'none';
     };
+    var jumpToElt = document.getElementById('jump-to');
+    jumpToElt.onchange = function() {
+      animationYear = parseInt(this.value);
+      if (animationInterval) {
+        clearInterval(animationInterval);
+      }
+      animateHeatSphere();
+    };
   }
 
   function createClouds(radius, segments) {
@@ -219,21 +227,23 @@
     return window.DATA.slice(totalOffset, totalOffset + monthSize);
   }
 
+  var animationMonth = 1;
+  var animationYear = 1880;
+  var animationInterval;
+
   function animateHeatSphere() {
-    var month = 1;
-    var year = 1880;
+    animationInterval = setInterval(function() {
+      renderHeatSphereForMonth(animationMonth, animationYear);
+      document.getElementById('bottom-title').innerHTML =
+          animationMonth + '/' + animationYear;
+      animationMonth++;
 
-    var t = setInterval(function() {
-      renderHeatSphereForMonth(month, year);
-      document.getElementById('bottom-title').innerHTML = month + '/' + year;
-      month++;
-
-      if (year > 2015) {
+      if (animationYear > 2015) {
         clearInterval(t);
       }
-      if (month > 12) {
-        month = 1;
-        year++;
+      if (animationMonth > 12) {
+        animationMonth = 1;
+        animationYear++;
       }
     }, 100);
   }
