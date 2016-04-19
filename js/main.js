@@ -173,7 +173,7 @@
     minOpacity: 0.5,
     gradient: {
       '0.': 'blue',
-      '.5': 'yellow',
+      '.7': 'yellow',
       '1.': 'red',
     }
   });
@@ -195,7 +195,7 @@
           arridx++;
           continue;
         }
-        val = Math.abs(val);
+        // val = Math.abs(val);
 
         max = Math.max(val, max);
         min = Math.min(val, min);
@@ -209,7 +209,7 @@
     }
 
     data = {
-      max: 1000,
+      max: 900,
       data: points
     };
 
