@@ -110,6 +110,9 @@
       }
       animateHeatSphere();
     };
+    document.getElementById('range-select').oninput = function() {
+      document.getElementById('range-value').innerHTML = this.value;
+    };
   }
 
   function createClouds(radius, segments) {
@@ -209,6 +212,7 @@
     }
 
     data = {
+      min: -100,
       max: 900,
       data: points
     };

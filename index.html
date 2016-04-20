@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Ancient Earth globe</title>
+	<title>Earth Temperatures</title>
   <meta name="twitter:card" content="summary">
   <meta name="twitter:site" content="@iwebst">
   <meta name="twitter:title" content="Ancient Earth - What the globe used to look like">
@@ -206,7 +206,13 @@
   <div id="instructions">
     Use the ← and → keys to step through time.
   </div>
-  <div id="bottom-title" class="title"></div>
+  <div class="title">
+    <span id="bottom-title"></span>
+    <span id="range">
+      <span id="range-value">1880</span>
+      <input id="range-select" type="range" width="100%" min=1880 max=2016 step=1 value=1880 />
+    </span>
+  </div>
 
   <div id="loading">Loading...</div>
 
